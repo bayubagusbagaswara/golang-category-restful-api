@@ -39,3 +39,8 @@
 - atau representasi semua data yang ada di database
 - kadang dibilang adalah data untuk request dan response
 - disebut juga sebagai entity
+
+# Category Repository
+
+- adalah data access layer nya ke domain category
+- kita menggunakan Repository Pattern
