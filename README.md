@@ -32,3 +32,10 @@
 - Database Name : golang_restful_api
 - Database user : root
 - Database password : root
+
+# Category Domain
+
+- adalah model untuk database
+- atau representasi semua data yang ada di database
+- kadang dibilang adalah data untuk request dan response
+- disebut juga sebagai entity
