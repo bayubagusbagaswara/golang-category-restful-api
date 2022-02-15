@@ -44,3 +44,7 @@
 
 - adalah data access layer nya ke domain category
 - kita menggunakan Repository Pattern
+
+# Category Repository
+
+- kita implementasi kontrak dari Repository nya
