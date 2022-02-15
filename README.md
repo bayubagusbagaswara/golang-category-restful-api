@@ -26,3 +26,9 @@
 - Driver MySQL : https://github.com/go-sql-driver/mysql
 - HTTP Router : https://github.com/julienschmidt/httprouter
 - Validation : https://github.com/go-playground/validator
+
+# Database
+
+- Database Name : golang_restful_api
+- Database user : root
+- Database password : root
