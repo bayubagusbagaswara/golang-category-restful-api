@@ -3,8 +3,12 @@ package main
 import (
 	"golangrestfulapi/app"
 	"golangrestfulapi/controller"
+	"golangrestfulapi/helper"
 	"golangrestfulapi/repository"
 	"golangrestfulapi/service"
+	"net/http"
+
+	_ "github.com/go-sql-driver/mysql"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/julienschmidt/httprouter"
@@ -36,4 +40,11 @@ func main() {
 	router.PUT("/api/categories/:categorId", categoryController.Update)
 	router.DELETE("/api/categories/:categoryId", categoryController.Delete)
 
+	// bikin server
+	server := http.Server{
+		Addr:    "localhost:3000",
+		Handler: router,
+	}
+	err := server.ListenAndServe()
+	helper.PanicIfError(err)
 }
