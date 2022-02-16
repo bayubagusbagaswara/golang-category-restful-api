@@ -7,17 +7,26 @@ import (
 	"golangrestfulapi/model/domain"
 	"golangrestfulapi/model/web"
 	"golangrestfulapi/repository"
+
+	"github.com/go-playground/validator/v10"
 )
 
+// struct disini berguna untuk menyimpan semua data/field/property yang dibutuhkan oleh CategoryServiceImpl
 type CategoryServiceImpl struct {
 
 	// disini kita butuh repository, karena untuk manipulasi datanya melalui repository
 	CategoryRepository repository.CategoryRepository
 	// kita buth koneksi ke databasenya
 	DB *sql.DB
+	// kita butuh vaidate juga
+	Validate *validator.Validate
 }
 
 func (service *CategoryServiceImpl) Create(ctx context.Context, request web.CategoryCreateRequest) web.CategoryResponse {
+	// sebelum mengirimkan data name, maka kita lakukan validasi
+	err := service.Validate.Struct(request)
+	helper.PanicIfError(err)
+
 	// karena kita menggunakan database transactional, maka untuk request kita butuh transactional
 	tx, err := service.DB.Begin()
 	helper.PanicIfError(err)
@@ -35,6 +44,10 @@ func (service *CategoryServiceImpl) Create(ctx context.Context, request web.Cate
 }
 
 func (service *CategoryServiceImpl) Update(ctx context.Context, request web.CategoryUpdateRequest) web.CategoryResponse {
+	// lalukan validasi dulu datanya
+	err := service.Validate.Struct(request)
+	helper.PanicIfError(err)
+
 	tx, err := service.DB.Begin()
 	helper.PanicIfError(err)
 	defer helper.CommitOrRollback(tx)
