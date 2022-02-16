@@ -4,5 +4,5 @@ package web
 // kita tambahkan juga validate untuk data name yagn dikirim
 // valdate required artinya harus diisi
 type CategoryCreateRequest struct {
-	Name string `validate:"required,max:200,min=1"`
+	Name string `validate:"required,max:200,min=1" json:"name"`
 }

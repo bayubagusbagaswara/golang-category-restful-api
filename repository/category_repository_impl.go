@@ -51,14 +51,15 @@ func (repository *CategoryRepositoryImpl) Delete(ctx context.Context, tx *sql.Tx
 
 func (repository *CategoryRepositoryImpl) FindById(ctx context.Context, tx *sql.Tx, categoryId int) (domain.Category, error) {
 	SQL := "select id, name from category where id = ?"
-	r, err := tx.QueryContext(ctx, SQL, categoryId)
+	rows, err := tx.QueryContext(ctx, SQL, categoryId)
 	helper.PanicIfError(err)
+	defer rows.Close()
 
 	category := domain.Category{}
 
-	if r.Next() {
+	if rows.Next() {
 		// jika datanya ada, maka kita ambil
-		err2 := r.Scan(&categoryId, &category.Name)
+		err2 := rows.Scan(&categoryId, &category.Name)
 		helper.PanicIfError(err2)
 		return category, nil
 
@@ -70,14 +71,15 @@ func (repository *CategoryRepositoryImpl) FindById(ctx context.Context, tx *sql.
 
 func (repository *CategoryRepositoryImpl) FindAll(ctx context.Context, tx *sql.Tx) []domain.Category {
 	SQL := "select id, name form category"
-	r, err := tx.QueryContext(ctx, SQL)
+	rows, err := tx.QueryContext(ctx, SQL)
 	helper.PanicIfError(err)
+	defer rows.Close()
 
 	var categories []domain.Category
 	// selama datanya ada, maka kita balikkan datanya
-	for r.Next() {
+	for rows.Next() {
 		category := domain.Category{}
-		err2 := r.Scan(&category.Id, &category.Name)
+		err2 := rows.Scan(&category.Id, &category.Name)
 		helper.PanicIfError(err2)
 		categories = append(categories, category)
 	}

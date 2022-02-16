@@ -9,7 +9,7 @@ import (
 // bikin function
 // DB itu struct, makanya kita set sebagai pointer
 func NewDB() *sql.DB {
-	db, err := sql.Open("mysql", "root:root@tcp(localhost:3360)/golang_restful_api")
+	db, err := sql.Open("mysql", "root:root@tcp(localhost:3306)/golang_restful_api")
 	helper.PanicIfError(err)
 
 	// set connection pooling
