@@ -5,6 +5,7 @@ import (
 	"golangrestfulapi/controller"
 	"golangrestfulapi/exception"
 	"golangrestfulapi/helper"
+	"golangrestfulapi/middleware"
 	"golangrestfulapi/repository"
 	"golangrestfulapi/service"
 	"net/http"
@@ -47,7 +48,7 @@ func main() {
 	// bikin server
 	server := http.Server{
 		Addr:    "localhost:3000",
-		Handler: router,
+		Handler: middleware.NewAuthMiddleware(router),
 	}
 	err := server.ListenAndServe()
 	helper.PanicIfError(err)
