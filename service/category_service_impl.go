@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"database/sql"
+	"golangrestfulapi/exception"
 	"golangrestfulapi/helper"
 	"golangrestfulapi/model/domain"
 	"golangrestfulapi/model/web"
@@ -63,7 +64,10 @@ func (service *CategoryServiceImpl) Update(ctx context.Context, request web.Cate
 
 	// cek apakah ada category di database
 	category, err := service.CategoryRepository.FindById(ctx, tx, request.Id)
-	helper.PanicIfError(err)
+
+	if err != nil {
+		panic(exception.NewNotFoundError(err.Error()))
+	}
 
 	// jika ada data category, maka kita ubah data name category nya dengan data baru dari request
 	category.Name = request.Name

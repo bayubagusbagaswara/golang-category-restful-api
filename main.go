@@ -3,6 +3,7 @@ package main
 import (
 	"golangrestfulapi/app"
 	"golangrestfulapi/controller"
+	"golangrestfulapi/exception"
 	"golangrestfulapi/helper"
 	"golangrestfulapi/repository"
 	"golangrestfulapi/service"
@@ -39,6 +40,9 @@ func main() {
 	router.POST("/api/categories", categoryController.Create)
 	router.PUT("/api/categories/:categorId", categoryController.Update)
 	router.DELETE("/api/categories/:categoryId", categoryController.Delete)
+
+	// bikin untuk router jika terjadi error
+	router.PanicHandler = exception.ErrorHandler
 
 	// bikin server
 	server := http.Server{
