@@ -22,6 +22,15 @@ type CategoryServiceImpl struct {
 	Validate *validator.Validate
 }
 
+// bikin function untuk membuat CategoryService, ini seperti Constructor
+func NewCategoryService(categoryRepository repository.CategoryRepository, DB *sql.DB, validate *validator.Validate) CategoryService {
+	return &CategoryServiceImpl{
+		CategoryRepository: categoryRepository,
+		DB:                 DB,
+		Validate:           validate,
+	}
+}
+
 func (service *CategoryServiceImpl) Create(ctx context.Context, request web.CategoryCreateRequest) web.CategoryResponse {
 	// sebelum mengirimkan data name, maka kita lakukan validasi
 	err := service.Validate.Struct(request)

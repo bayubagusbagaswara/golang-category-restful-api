@@ -16,6 +16,14 @@ type CategoryControllerImpl struct {
 	CategoryService service.CategoryService
 }
 
+// bikin function untuk membuat CategoryController baru, dimana tipe data balikanny adalah CategoryController, tetapi didalamnya adalah implementasi struct CategoryControllerService
+// ini mirip seperti Polymorphism
+func NewCategoryController(categoryService service.CategoryService) CategoryController {
+	return &CategoryControllerImpl{
+		CategoryService: categoryService,
+	}
+}
+
 func (controller *CategoryControllerImpl) Create(writer http.ResponseWriter, request *http.Request, params httprouter.Params) {
 
 	// buat categoryCreateRequest, dimana hanya data name
